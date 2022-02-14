@@ -16,11 +16,9 @@
     <extension point="xbmc.service" library="service.py" start="startup"/>
     <extension point="xbmc.addon.metadata">
         <summary lang="de">Watch xPress!</summary>
-        <description lang="de">Mit diesem Addon kannst du auf alle angebotenen Streams verschiedenster deutschen Quellen
-            zugreifen
+        <description lang="de">Mit diesem Addon kannst du auf alle angebotenen Streams verschiedenster deutschen Quellen zugreifen
         </description>
-        <disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder
-            gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Content-Anbietern.
+        <disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Content-Anbietern.
         </disclaimer>
         <source>https://github.com/nikiibarbaro/plugin.video.xpress</source>
         <license>GNU GPLv3</license>
