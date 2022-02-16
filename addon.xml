@@ -25,9 +25,7 @@
         <platform>all</platform>
         <news>
             [B]v0.0.1[/B]
-            [list]
             [*]Init xPress
-            [/list]
         </news>
         <assets>
             <icon>icon.png</icon>
