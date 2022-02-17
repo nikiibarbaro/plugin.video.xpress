@@ -1,6 +1,13 @@
 # -*- coding: utf-8 -*-
 
 import sys, xbmc, xbmcgui
+
+resolverAddonID = 'script.module.resolveurl'
+resolverAddon= xbmcaddon.Addon(resolverAddonID)
+addonResolverTranslatedPath = translatePath(resolverAddon.getAddonInfo('path'))
+
+path.append(addonResolverTranslatedPath)
+
 import resolveurl as resolver
 #import urlresolver as resolver
 
