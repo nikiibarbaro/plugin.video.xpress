@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 
-import sys, xbmc, xbmcgui
+import sys, xbmc, xbmcgui, xbmcaddon, xbmcvfs
+from sys import path
+import web_pdb;
+web_pdb.set_trace()
+resolverAddonID = 'script.module.resolveurl'
+resolverAddon= xbmcaddon.Addon(resolverAddonID)
+addonResolverTranslatedPath = xbmcvfs.translatePath(resolverAddon.getAddonInfo('path'))
 
-# resolverAddonID = 'script.module.resolveurl'
-# resolverAddon= xbmcaddon.Addon(resolverAddonID)
-# addonResolverTranslatedPath = translatePath(resolverAddon.getAddonInfo('path'))
-#
-# path.append(addonResolverTranslatedPath)
-#
-# import resolveurl as resolver
+path.append(addonResolverTranslatedPath)
+
+import resolveurl as resolver
 #import urlresolver as resolver
 
 # sLink = resolver.resolve(str('https://voe.sx/e/q71l8ub1kp3b'))

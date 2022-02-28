@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.xpress" name="xPress" version="0.1.6" provider-name="xPress-Team">
+<addon id="plugin.video.xpress" name="xPress" version="0.0.3" provider-name="xPress-Team">
     <requires>
         <import addon="script.module.requests"/>
         <import addon="script.module.beautifulsoup4"/>
-        <import addon="script.module.resolveurl" version="5.1.54"/>
+        <import addon="script.module.resolveurl" version="5.1.60"/>
+        <import addon="script.module.web-pdb"/>
         <import addon="script.module.six" version="1.11.0"/>
         <!-- <import addon="repository.xpress" optional="true"/> -->
         <import addon="script.module.inputstreamhelper" version="0.3.3" optional="true"/>
@@ -13,7 +14,7 @@
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
     </extension>
-    <extension point="xbmc.service" library="updater.py"/>
+    <extension point="xbmc.service" library="service.py"/>
     <extension point="xbmc.addon.metadata">
         <summary lang="de">Watch xPress!</summary>
         <description lang="de">Mit diesem Addon kannst du auf alle angebotenen Streams verschiedenster deutschen Quellen zugreifen</description>
@@ -23,8 +24,13 @@
         <license>GNU GPLv3</license>
         <platform>all</platform>
         <news>
-            [B]vX.X.X[/B]
-            Init xPress
+            [B]v0.0.1[/B]
+            - added codebase
+            - added structure
+            [B]v0.0.2[/B]
+            - added updateManager
+            [B]v0.0.3[/B]
+            - testing some inner process handling
         </news>
         <assets>
             <icon>icon.png</icon>
