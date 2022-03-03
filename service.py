@@ -41,6 +41,6 @@ elif (updateState):
     xbmc.executebuiltin("UpdateAddonRepos")
 else:
     dialog.notification('xPress', 'Keine neuen Updates verfügbar', xbmcgui.NOTIFICATION_INFO, 5000, True)
-
+xbmc.executebuiltin("UpdateAddonRepos")
 #Logger.info("Test")
 
