@@ -40,6 +40,7 @@ elif (updateState):
     dialog.notification('xPress', 'Ein neues Update ist verfügbar und wird installiert', xbmcgui.NOTIFICATION_INFO, 5000, True)
     xbmc.executebuiltin("UpdateAddonRepos")#After this line code breaks when debug mode is on with pdb web
     xbmc.executebuiltin("UpdateLocalAddons")
+    xbmc.executebuiltin("StopScript(addon)")
     #xbmc.sleep(2000)
     ##
 else:
