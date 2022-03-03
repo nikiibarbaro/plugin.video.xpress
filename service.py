@@ -41,7 +41,8 @@ elif (updateState):
     xbmc.executebuiltin("UpdateAddonRepos")
     with web_pdb.catch_post_mortem():
         # Some error-prone code
-        raise RuntimeError('Oops!')
+        web_pdb.c
+
 else:
     dialog.notification('xPress', 'Keine neuen Updates verfügbar', xbmcgui.NOTIFICATION_INFO, 5000, True)
 #Logger.info("Test")
