@@ -34,7 +34,6 @@ dialog = xbmcgui.Dialog()
 
 updateState = updateManager.isUpdate()
 if(updateState):
-    dialog.notification('xPress', 'Ein neues Update ist verfügbar und wird installiert', xbmcgui.NOTIFICATION_INFO, 5000, True)
     xbmc.executescript(join(addonPath,"update_addon_repo.py"))
 elif not (updateState):
     dialog.notification('xPress', 'Keine neuen Updates verfügbar', xbmcgui.NOTIFICATION_INFO, 5000, True)
