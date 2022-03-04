@@ -28,7 +28,7 @@ from resources.lib.controllers.logger import Logger
 """
     Stopping addon just for safty to not conflict with potential updates
 """
-#xbmc.executebuiltin("StopScript(addon)")
+xbmc.executebuiltin("StopScript(addon)")
 
 """Create dialog object for displaying informations"""
 dialog = xbmcgui.Dialog()
