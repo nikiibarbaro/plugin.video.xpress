@@ -34,10 +34,20 @@ dialog = xbmcgui.Dialog()
 
 updateState = updateManager.isUpdate()
 if(updateState):
-    xbmc.executescript(join(addonPath,"update_addon_repo.py"))
+    dialog.notification('xPress', 'Ein neues Update ist verfügbar und wird installiert', xbmcgui.NOTIFICATION_INFO, 5000, True)
+    xbmc.executebuiltin("StopScript({0})".format(ADDON_NAME))
+    xbmc.executebuiltin("UpdateAddonRepos")
+    xbmc.executebuiltin("UpdateLocalAddons")
+    xbmc.sleep(10000)
+    updateState = updateManager.isUpdate()
+    if(updateState):
+        dialog.notification('xPress', 'Update konnte nicht installiert werden, bitte versuchen Sie es in ein paar Minuten erneut', xbmcgui.NOTIFICATION_WARNING, 5000, True)
+    else:
+        dialog.notification('xPress', 'Erfolgreich aktualisiert', xbmcgui.NOTIFICATION_INFO, 5000, True)
+    #xbmc.executescript(join(addonPath,"update_addon_repo.py"))
 elif not (updateState):
     dialog.notification('xPress', 'Keine neuen Updates verfügbar', xbmcgui.NOTIFICATION_INFO, 5000, True)
 else:
-    dialog.notification('xPress', 'Updateprozess wurde abgebrochen, siehe Details: kodi.log', xbmcgui.NOTIFICATION_INFO, 5000, True)
+    dialog.notification('xPress', 'Updateprozess wurde abgebrochen, siehe Details: kodi.log', xbmcgui.NOTIFICATION_ERROR, 5000, True)
 
 
