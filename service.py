@@ -45,7 +45,7 @@ if(updateState):
     else:
         dialog.notification('xPress', 'Erfolgreich aktualisiert', xbmcgui.NOTIFICATION_INFO, 5000, True)
     #xbmc.executescript(join(addonPath,"update_addon_repo.py"))
-elif not (updateState):
+elif(updateState) == False:
     dialog.notification('xPress', 'Keine neuen Updates verfügbar', xbmcgui.NOTIFICATION_INFO, 5000, True)
 else:
     dialog.notification('xPress', 'Updateprozess wurde abgebrochen, siehe Details: kodi.log', xbmcgui.NOTIFICATION_ERROR, 5000, True)
