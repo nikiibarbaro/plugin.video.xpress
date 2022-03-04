@@ -38,7 +38,7 @@ if(updateState):
     xbmc.executebuiltin("StopScript({0})".format(ADDON_NAME))
     xbmc.executebuiltin("UpdateAddonRepos")
     xbmc.executebuiltin("UpdateLocalAddons")
-    xbmc.sleep(10000)
+    xbmc.Monitor().waitForAbort(10)
     updateState = updateManager.isUpdate()
     if(updateState):
         dialog.notification('xPress', 'Update konnte nicht installiert werden, bitte versuchen Sie es in ein paar Minuten erneut', xbmcgui.NOTIFICATION_WARNING, 5000, True)
