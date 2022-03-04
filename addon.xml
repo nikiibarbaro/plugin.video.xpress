@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.xpress" name="xPress" version="0.0.14" provider-name="xPress-Team">
+<addon id="plugin.video.xpress" name="xPress" version="0.0.4" provider-name="xPress-Team">
     <requires>
         <import addon="script.module.requests"/>
         <import addon="script.module.beautifulsoup4"/>
@@ -30,6 +30,9 @@
             - added updateManager
             [B]v0.0.3[/B]
             - testing some inner process handling
+            [B]v0.0.4[/B]
+            - exported method UpdateAddonRepos
+            - added update_addon_repo.py
         </news>
         <assets>
             <icon>icon.png</icon>
