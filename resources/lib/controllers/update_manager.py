@@ -94,12 +94,14 @@ class updateManager:
 
     @staticmethod
     def updateOnStartup(sqlconnection, action):
+        action.execute('UPDATE repo SET lastcheck = "2020-01-01 10:00:00" WHERE addonID ="repository.xpress"')
         nextUpdate = updateManager.setUpdateInterval(updateManager.getGlobalTime(), interval_h=0, interval_m=0,interval_s=2)
         action.execute('UPDATE repo SET nextcheck = "{0}" WHERE addonID ="repository.xpress"'.format(nextUpdate))
         sqlconnection.commit()
 
     @staticmethod
     def updateOnInterval(sqlconnection, action):
+        action.execute('UPDATE repo SET lastcheck = "2020-01-01 10:00:00" WHERE addonID ="repository.xpress"')
         nextUpdate = updateManager.setUpdateInterval(updateManager.getGlobalTime())
         action.execute('UPDATE repo SET nextcheck = "{0}" WHERE addonID ="repository.xpress"'.format(nextUpdate))
         sqlconnection.commit()
