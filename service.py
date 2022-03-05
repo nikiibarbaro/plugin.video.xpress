@@ -44,7 +44,6 @@ if(updateState):
         dialog.notification('xPress', 'Update konnte nicht installiert werden, bitte versuchen Sie es in ein paar Minuten erneut', xbmcgui.NOTIFICATION_WARNING, 5000, True)
     else:
         dialog.notification('xPress', 'Erfolgreich aktualisiert', xbmcgui.NOTIFICATION_INFO, 5000, True)
-    #xbmc.executescript(join(addonPath,"update_addon_repo.py"))
 elif(updateState) == False:
     dialog.notification('xPress', 'Keine neuen Updates verfügbar', xbmcgui.NOTIFICATION_INFO, 5000, True)
 else:
