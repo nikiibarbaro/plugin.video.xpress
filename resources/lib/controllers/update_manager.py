@@ -72,7 +72,6 @@ class updateManager:
     @staticmethod
     def forceRepoUpdate():
 
-        xbmc.sleep(1000)
 
         connection = sqlite3.connect(pathDatabase)
         action = connection.cursor()
