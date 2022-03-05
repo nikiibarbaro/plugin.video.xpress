@@ -78,12 +78,12 @@ class updateManager:
         action = connection.cursor()
 
         # Update on startup
-        nextUpdate = updateManager.setUpdateInterval(updateManager.getGlobalTime(), interval_h=0, interval_m=0,interval_s=10)
+        nextUpdate = updateManager.setUpdateInterval(updateManager.getGlobalTime(), interval_h=0, interval_m=0,interval_s=1)
         action.execute('UPDATE repo SET nextcheck = "{0}" WHERE addonID ="repository.xpress"'.format(nextUpdate))
         connection.commit()
         action.execute('SELECT nextcheck FROM repo WHERE addonID ="repository.xpress"')
         updateStart = action.fetchone()
-
+        xbmc.sleep(2000)
         # Update after 8 hours default time
         nextUpdate = updateManager.setUpdateInterval(updateManager.getGlobalTime())
         action.execute('UPDATE repo SET nextcheck = "{0}" WHERE addonID ="repository.xpress"'.format(nextUpdate))
