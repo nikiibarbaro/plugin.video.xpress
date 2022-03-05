@@ -48,6 +48,7 @@ if(updateState):
     else:
         dialog.notification('xPress', 'Erfolgreich aktualisiert', xbmcgui.NOTIFICATION_INFO, 5000, True)
 elif(updateState) == False:
+    updateManager.forceRepoUpdate(1)
     dialog.notification('xPress', 'Keine neuen Updates verfügbar', xbmcgui.NOTIFICATION_INFO, 5000, True)
 else:
     dialog.notification('xPress', 'Updateprozess wurde abgebrochen, siehe Details: kodi.log', xbmcgui.NOTIFICATION_ERROR, 5000, True)
