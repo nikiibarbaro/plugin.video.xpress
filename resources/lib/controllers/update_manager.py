@@ -82,7 +82,7 @@ class updateManager:
         updateStart = action.fetchone()
         if(mode==0):
             # Update on startup
-            updateManager.updateOnStartup(sqlconnection, action)
+            updateManager.updateOnStartup1(sqlconnection, action)
         else:
             # Update after 8 hours default time
             updateManager.updateOnInterval(sqlconnection, action)
@@ -99,6 +99,12 @@ class updateManager:
         action.execute('UPDATE repo SET nextcheck = "{0}" WHERE addonID ="repository.xpress"'.format(nextUpdate))
         sqlconnection.commit()
 
+    @staticmethod
+    def updateOnStartup1(sqlconnection, action):
+        action.execute('UPDATE repo SET lastcheck = "2020-01-01 10:00:00" WHERE addonID ="repository.xpress"')
+        nextUpdate = updateManager.setUpdateInterval(updateManager.getGlobalTime(), interval_h=0, interval_m=0,interval_s=30)
+        action.execute('UPDATE repo SET nextcheck = "{0}" WHERE addonID ="repository.xpress"'.format(nextUpdate))
+        sqlconnection.commit()
     @staticmethod
     def updateOnInterval(sqlconnection, action):
         action.execute('UPDATE repo SET lastcheck = "2020-01-01 10:00:00" WHERE addonID ="repository.xpress"')
