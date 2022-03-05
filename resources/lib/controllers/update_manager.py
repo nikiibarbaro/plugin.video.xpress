@@ -94,7 +94,7 @@ class updateManager:
 
     @staticmethod
     def updateOnStartup(sqlconnection, action):
-        nextUpdate = updateManager.setUpdateInterval(updateManager.getGlobalTime(), interval_h=0, interval_m=0,interval_s=1)
+        nextUpdate = updateManager.setUpdateInterval(updateManager.getGlobalTime(), interval_h=0, interval_m=0,interval_s=5)
         action.execute('UPDATE repo SET nextcheck = "{0}" WHERE addonID ="repository.xpress"'.format(nextUpdate))
         sqlconnection.commit()
 
