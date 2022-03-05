@@ -4,6 +4,7 @@ import xbmc
 import requests #normal to be not recognized by IDEA due packages not exists in env
 import re
 import os
+import xml.etree.ElementTree as et
 
 from os.path import join
 from sys import path
@@ -47,14 +48,18 @@ class updateManager:
         return addonVersionLocal
 
     """Get version from remote zip"""
-
     @staticmethod
     def getRemoteVersion():
-        addonFilenameZip = updateManager.getLatestFilename()
-        if (addonFilenameZip is None):
+        url = "https://raw.githubusercontent.com/{0}/{1}/master/zips/addons.xml".format(USER, REPOSITORY_NAME)
+        response = requests.get(url)
+        if(response.status_code != 200):
             return None
-        addonVersionRemote = re.search("plugin.video.xpress-(.*).zip", addonFilenameZip).group(1)
-        return addonVersionRemote
+        tree = et.fromstring(response.content)
+        for element in tree:
+            if (element.attrib.get("id") == ADDON_NAME):
+                remoteVersion = element.attrib.get("version")
+                return remoteVersion
+        return None
 
     """This function crawls through jsons to get the latest zip filename"""
 
@@ -87,7 +92,7 @@ class updateManager:
         addonFilenameZip = updateManager.getLatestFilename()
         if (addonFilenameZip is None):
             return None
-        url = "https://github.com/{}/{}/blob/master/zips/{}/{}?raw=true".format(USER, REPOSITORY_NAME, ADDON_NAME,
+        url = "https://github.com/{0}/{1}/blob/master/zips/{2}/{3}?raw=true".format(USER, REPOSITORY_NAME, ADDON_NAME,
                                                                                 addonFilenameZip)
         return url
 
@@ -126,10 +131,10 @@ class updateManager:
     @staticmethod
     def clearCachedPackage():
         filename = updateManager.getCachedPackageName()
-        if (os.path.isfile(pathPackages+"\\{}".format(filename))):
-            os.remove(pathPackages+"\\{}".format(filename))
+        if (os.path.isfile(pathPackages+"\\{0}".format(filename))):
+            os.remove(pathPackages+"\\{0}".format(filename))
         else:
-            print("Error: %s file not found" % pathPackages+"\\{}".format(filename))
+            print("Error: %s file not found" % pathPackages+"\\{0}".format(filename))
 
 
 # """Download latest version as .zip file"""
