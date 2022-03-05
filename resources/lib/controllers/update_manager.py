@@ -70,27 +70,39 @@ class updateManager:
         return None
 
     @staticmethod
-    def forceRepoUpdate():
+    def forceRepoUpdate(mode=0):
+        """
+        :param int mode: 0 = startup, 1 = after 8 hours
+        """
 
+        sqlconnection = sqlite3.connect(pathDatabase)
+        action = sqlconnection.cursor()
 
-        connection = sqlite3.connect(pathDatabase)
-        action = connection.cursor()
-
-        # Update on startup
-        nextUpdate = updateManager.setUpdateInterval(updateManager.getGlobalTime(), interval_h=0, interval_m=0,interval_s=1)
-        action.execute('UPDATE repo SET nextcheck = "{0}" WHERE addonID ="repository.xpress"'.format(nextUpdate))
-        connection.commit()
         action.execute('SELECT nextcheck FROM repo WHERE addonID ="repository.xpress"')
         updateStart = action.fetchone()
-        xbmc.sleep(2000)
-        # Update after 8 hours default time
-        nextUpdate = updateManager.setUpdateInterval(updateManager.getGlobalTime())
-        action.execute('UPDATE repo SET nextcheck = "{0}" WHERE addonID ="repository.xpress"'.format(nextUpdate))
-        connection.commit()
+        if(mode==0):
+            # Update on startup
+            updateManager.updateOnStartup(sqlconnection, action)
+        else:
+            # Update after 8 hours default time
+            updateManager.updateOnInterval(sqlconnection, action)
+
         action.execute('SELECT nextcheck FROM repo WHERE addonID ="repository.xpress"')
         updateHours = action.fetchone()
+        sqlconnection.close()
 
-        connection.close()
+
+    @staticmethod
+    def updateOnStartup(sqlconnection, action):
+        nextUpdate = updateManager.setUpdateInterval(updateManager.getGlobalTime(), interval_h=0, interval_m=0,interval_s=1)
+        action.execute('UPDATE repo SET nextcheck = "{0}" WHERE addonID ="repository.xpress"'.format(nextUpdate))
+        sqlconnection.commit()
+
+    @staticmethod
+    def updateOnInterval(sqlconnection, action):
+        nextUpdate = updateManager.setUpdateInterval(updateManager.getGlobalTime())
+        action.execute('UPDATE repo SET nextcheck = "{0}" WHERE addonID ="repository.xpress"'.format(nextUpdate))
+        sqlconnection.commit()
 
     @staticmethod
     def setUpdateInterval(timestamp, interval_h=8, interval_m=0, interval_s=0):
