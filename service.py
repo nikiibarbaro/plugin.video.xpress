@@ -39,8 +39,9 @@ if(updateState):
     #xbmc.executebuiltin("UpdateAddonRepos")
     #xbmc.executebuiltin("UpdateLocalAddons")
     #xbmc.Monitor().waitForAbort(10)
-    updateManager.forceRepoUpdate()
+    updateManager.forceRepoUpdate(0)
     xbmc.Monitor().waitForAbort(10)
+    updateManager.forceRepoUpdate(1)
     updateState = updateManager.isUpdate()
     if(updateState):
         dialog.notification('xPress', 'Update konnte nicht installiert werden, bitte versuchen Sie es in ein paar Minuten erneut', xbmcgui.NOTIFICATION_WARNING, 5000, True)
