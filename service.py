@@ -40,7 +40,7 @@ if(updateState):
     #xbmc.executebuiltin("UpdateLocalAddons")
     #xbmc.Monitor().waitForAbort(10)
     updateManager.forceRepoUpdate(0)
-    #xbmc.sleep(4000)
+    xbmc.sleep(10000)
 
     updateState = updateManager.isUpdate()
     if(updateState):
@@ -52,5 +52,5 @@ elif(updateState) == False:
     dialog.notification('xPress', 'Keine neuen Updates verfügbar', xbmcgui.NOTIFICATION_INFO, 5000, True)
 else:
     dialog.notification('xPress', 'Updateprozess wurde abgebrochen, siehe Details: kodi.log', xbmcgui.NOTIFICATION_ERROR, 5000, True)
-updateManager.forceRepoUpdate(1)
+#updateManager.forceRepoUpdate(1)
 
