@@ -70,7 +70,11 @@ class updateManager:
         return None
 
     @staticmethod
-    def forceRepoUpdate(mode=0):
+    def forceRepoUpdate():
+        xbmc.executebuiltin("UpdateAddonRepos")
+
+    @staticmethod
+    def forceRepoUpdate1(mode=0):
         """
         :param int mode: 0 = startup, 1 = after 8 hours
         """
