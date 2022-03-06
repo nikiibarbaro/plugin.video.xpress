@@ -7,10 +7,11 @@ import os
 import sqlite3
 import datetime
 import xml.etree.ElementTree as et
-
 from os.path import join
 from sys import path
 
+# import web_pdb;#NEED TO COMMENTED OUT BEFORE PUSHING TO GITHUB TO PREVENT UPDATER BREAKS
+# web_pdb.set_trace()#NEED TO COMMENTED OUT BEFORE PUSHING TO GITHUB TO PREVENT UPDATER BREAKS
 """
     USER = Username
     REPOSITORY_NAME = Repository name
@@ -26,7 +27,7 @@ ADDON_PATH = "zips/plugin.video.xpress"
 pathHome = xbmcvfs.translatePath("special://home")
 pathXbmc = xbmcvfs.translatePath("special://xbmc")
 pathPackages = xbmcvfs.translatePath(join("special://home", "addons", "packages"))
-pathDatabase = xbmcvfs.translatePath(join("special://home", "userdata", "Database", "Addons33.db"))
+pathAddonDataAddon = xbmcvfs.translatePath(join("special://home", "userdata", "addon_data", "{0}".format(ADDON_NAME)))
 # pathAddon = xbmcaddon.Addon(ADDON_NAME).getAddonInfo("path")
 
 """Add filepath from imports to addon"""
@@ -38,6 +39,7 @@ pathDatabase = xbmcvfs.translatePath(join("special://home", "userdata", "Databas
 # path.append(join(addonPath, "resources", "lib", "modules"))
 # from resources.lib.controllers.addPaths import addPaths
 from resources.lib.modules.packaging import version
+from resources.lib.controllers.settings import Settings
 
 
 class updateManager:
@@ -73,6 +75,41 @@ class updateManager:
     def forceRepoUpdate():
         xbmc.executebuiltin("UpdateAddonRepos")
 
+    """Checks if update is available"""
+
+    @staticmethod
+    def isUpdate():
+        remoteVersion = updateManager.getRemoteVersion()
+        localVersion = updateManager.getLocalVersion()
+        if (remoteVersion is None or localVersion is None):
+            return None
+        if (version.parse(remoteVersion) > version.parse(localVersion)):
+            return True
+        else:
+            return False
+
+    @staticmethod
+    def getIsUpdated():
+        return Settings.getIsUpdated()
+
+    @staticmethod
+    def setIsUpdated(state):
+        Settings.setIsUpdated(state)
+
+    """Enable Addon"""
+
+    @staticmethod
+    def enableAddon():
+        xbmc.executeJSONRPC(
+            '{"jsonrpc":"2.0","method":"Addons.SetAddonEnabled","id":1,"params":{"addonid":"%s", "enabled":true}}' % ADDON_NAME)
+
+    """Disable Addon"""
+
+    @staticmethod
+    def disableAddon():
+        xbmc.executeJSONRPC(
+            '{"jsonrpc":"2.0","method":"Addons.SetAddonEnabled","id":1,"params":{"addonid":"%s", "enabled":false}}' % ADDON_NAME)
+
     """This function crawls through jsons to get the latest zip filename"""
 
     @staticmethod
@@ -107,30 +144,3 @@ class updateManager:
         url = "https://github.com/{0}/{1}/blob/master/zips/{2}/{3}?raw=true".format(USER, REPOSITORY_NAME, ADDON_NAME,
                                                                                     addonFilenameZip)
         return url
-
-    """Checks if update is available"""
-
-    @staticmethod
-    def isUpdate():
-        remoteVersion = updateManager.getRemoteVersion()
-        localVersion = updateManager.getLocalVersion()
-        if (remoteVersion is None or localVersion is None):
-            return None
-        if (version.parse(remoteVersion) > version.parse(localVersion)):
-            return True
-        else:
-            return False
-
-    """Enable Addon"""
-
-    @staticmethod
-    def enableAddon():
-        xbmc.executeJSONRPC(
-            '{"jsonrpc":"2.0","method":"Addons.SetAddonEnabled","id":1,"params":{"addonid":"%s", "enabled":true}}' % ADDON_NAME)
-
-    """Disable Addon"""
-
-    @staticmethod
-    def disableAddon():
-        xbmc.executeJSONRPC(
-            '{"jsonrpc":"2.0","method":"Addons.SetAddonEnabled","id":1,"params":{"addonid":"%s", "enabled":false}}' % ADDON_NAME)
