@@ -73,62 +73,6 @@ class updateManager:
     def forceRepoUpdate():
         xbmc.executebuiltin("UpdateAddonRepos")
 
-    @staticmethod
-    def forceRepoUpdate1(mode=0):
-        """
-        :param int mode: 0 = startup, 1 = after 8 hours
-        """
-
-        sqlconnection = sqlite3.connect(pathDatabase)
-        action = sqlconnection.cursor()
-
-        action.execute('SELECT nextcheck FROM repo WHERE addonID ="repository.xpress"')
-        updateStart = action.fetchone()
-        if(mode==0):
-            # Update on startup
-            updateManager.updateOnStartup1(sqlconnection, action)
-        else:
-            # Update after 8 hours default time
-            updateManager.updateOnInterval(sqlconnection, action)
-
-        action.execute('SELECT nextcheck FROM repo WHERE addonID ="repository.xpress"')
-        updateHours = action.fetchone()
-        sqlconnection.close()
-
-
-    @staticmethod
-    def updateOnStartup(sqlconnection, action):
-        action.execute('UPDATE repo SET lastcheck = "2020-01-01 10:00:00" WHERE addonID ="repository.xpress"')
-        nextUpdate = updateManager.setUpdateInterval(updateManager.getGlobalTime(), interval_h=0, interval_m=0,interval_s=2)
-        action.execute('UPDATE repo SET nextcheck = "{0}" WHERE addonID ="repository.xpress"'.format(nextUpdate))
-        sqlconnection.commit()
-
-    @staticmethod
-    def updateOnStartup1(sqlconnection, action):
-        action.execute('UPDATE repo SET lastcheck = "2020-01-01 10:00:00" WHERE addonID ="repository.xpress"')
-        nextUpdate = updateManager.setUpdateInterval(updateManager.getGlobalTime(), interval_h=0, interval_m=0,interval_s=30)
-        action.execute('UPDATE repo SET nextcheck = "{0}" WHERE addonID ="repository.xpress"'.format(nextUpdate))
-        sqlconnection.commit()
-    @staticmethod
-    def updateOnInterval(sqlconnection, action):
-        action.execute('UPDATE repo SET lastcheck = "2020-01-01 10:00:00" WHERE addonID ="repository.xpress"')
-        nextUpdate = updateManager.setUpdateInterval(updateManager.getGlobalTime())
-        action.execute('UPDATE repo SET nextcheck = "{0}" WHERE addonID ="repository.xpress"'.format(nextUpdate))
-        sqlconnection.commit()
-
-    @staticmethod
-    def setUpdateInterval(timestamp, interval_h=8, interval_m=0, interval_s=0):
-        timestamp = ''.join(timestamp)
-        nextUpdate = datetime.datetime.strptime(timestamp, "%Y-%m-%d %H:%M:%S") + datetime.timedelta(hours=interval_h,
-                                                                                                     minutes=interval_m,
-                                                                                                     seconds=interval_s)
-        return str(nextUpdate)
-
-    @staticmethod
-    def getGlobalTime():
-        globalTime = datetime.datetime.now()
-        return str(globalTime.strftime("%Y-%m-%d %H:%M:%S"))
-
     """This function crawls through jsons to get the latest zip filename"""
 
     @staticmethod
@@ -190,32 +134,3 @@ class updateManager:
     def disableAddon():
         xbmc.executeJSONRPC(
             '{"jsonrpc":"2.0","method":"Addons.SetAddonEnabled","id":1,"params":{"addonid":"%s", "enabled":false}}' % ADDON_NAME)
-
-    """Checks if addon.zip in packages exist"""
-
-    @staticmethod
-    def getCachedPackageName():
-        arr = os.listdir(pathPackages)
-        for name in arr:
-            if (re.search("plugin.video.xpress-{1}.*.zip{1}", name)):
-                return name
-        return None
-
-    """Remove cached addon.zip"""
-
-    @staticmethod
-    def clearCachedPackage():
-        filename = updateManager.getCachedPackageName()
-        if (os.path.isfile(pathPackages + "\\{0}".format(filename))):
-            os.remove(pathPackages + "\\{0}".format(filename))
-        else:
-            print("Error: %s file not found" % pathPackages + "\\{0}".format(filename))
-
-# """Download latest version as .zip file"""
-# @staticmethod
-# def update(self):
-#     url = self.getLatestZipUrl()
-#     response = requests.get(url, stream=True)
-#     with open('E:\\test.zip', 'wb') as fd:
-#         for chunk in response.iter_content(chunk_size=512):
-#             fd.write(chunk)
