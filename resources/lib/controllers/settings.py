@@ -41,8 +41,8 @@ class Settings:
     def getIsUpdated():
         with open(add_paths.pathAddonSettings) as json_file:
             data = json.load(json_file)
-        if (data["settings"][0]["isUpdated"] == True):
-            Settings.setIsUpdated(False)
+        if (data["settings"][0]["isUpdated"] == "True"):
+            Settings.setIsUpdated("False")
             return True
         else:
             return False
