@@ -2,7 +2,7 @@ import json
 import add_paths
 import os.path
 
-
+"""Initialize json structure on first use"""
 if not (os.path.exists(add_paths.pathAddonSettings)):
     structure = {
         "settings": [
@@ -16,8 +16,11 @@ if not (os.path.exists(add_paths.pathAddonSettings)):
     with open(add_paths.pathAddonSettings, "w+") as settings:
         settings.write(initJson)
 
+"""Class for settings used in addon"""
+
 
 class Settings:
+    """Sets state of 'isUpdated'"""
 
     @staticmethod
     def setIsUpdated(state):
@@ -32,11 +35,13 @@ class Settings:
         with open(add_paths.pathAddonSettings, "w+") as settings:
             settings.write(settingsJson)
 
+    """Gets state of 'isUpdated'"""
+
     @staticmethod
     def getIsUpdated():
         with open(add_paths.pathAddonSettings) as json_file:
             data = json.load(json_file)
-        if(data["settings"][0]["isUpdated"]==True):
+        if (data["settings"][0]["isUpdated"] == True):
             Settings.setIsUpdated(False)
             return True
         else:

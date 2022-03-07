@@ -43,7 +43,7 @@ from resources.lib.controllers.settings import Settings
 
 
 class updateManager:
-    """Get version from local addon"""
+    """Gets version from local addon"""
 
     @staticmethod
     def getLocalVersion():
@@ -56,7 +56,7 @@ class updateManager:
             return None
         return addonVersionLocal
 
-    """Get version from remote zip"""
+    """Gets version from remote zip"""
 
     @staticmethod
     def getRemoteVersion():
@@ -70,6 +70,8 @@ class updateManager:
                 remoteVersion = element.attrib.get("version")
                 return remoteVersion
         return None
+
+    """forces Kodi to check for new updates in the Repo and installing it"""
 
     @staticmethod
     def forceRepoUpdate():
@@ -88,29 +90,33 @@ class updateManager:
         else:
             return False
 
+    """Gets state whether on last run an update was applied to addon"""
+
     @staticmethod
     def getIsUpdated():
         return Settings.getIsUpdated()
+
+    """Sets state of json 'isUpdated' to True/False"""
 
     @staticmethod
     def setIsUpdated(state):
         Settings.setIsUpdated(state)
 
-    """Enable Addon"""
+    """Enables addon"""
 
     @staticmethod
     def enableAddon():
         xbmc.executeJSONRPC(
             '{"jsonrpc":"2.0","method":"Addons.SetAddonEnabled","id":1,"params":{"addonid":"%s", "enabled":true}}' % ADDON_NAME)
 
-    """Disable Addon"""
+    """Disables addon"""
 
     @staticmethod
     def disableAddon():
         xbmc.executeJSONRPC(
             '{"jsonrpc":"2.0","method":"Addons.SetAddonEnabled","id":1,"params":{"addonid":"%s", "enabled":false}}' % ADDON_NAME)
 
-    """This function crawls through jsons to get the latest zip filename"""
+    """Crawls through jsons to get the latest zip filename"""
 
     @staticmethod
     def getLatestFilename():
@@ -134,7 +140,7 @@ class updateManager:
         else:
             return addonFilenameZip
 
-    """Get url to .zip in zips/plugin.video.xpress"""
+    """Gets url to .zip in zips/plugin.video.xpress"""
 
     @staticmethod
     def getLatestZipUrl():
