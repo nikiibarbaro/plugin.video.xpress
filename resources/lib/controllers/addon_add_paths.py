@@ -4,10 +4,6 @@ from sys import path
 from os.path import join
 import os
 from resources.lib.controllers.addon_add_global_variables import ADDON_ID
-from resources.lib.controllers.logger import Logger
-
-"""Create logger"""
-logger = Logger(os.path.basename(__file__))
 
 """
 MAKE SURE TO IMPORT THIS FILE FIRST IN THE ROOT FILE TO ENSURE PROPER USE!
@@ -39,8 +35,6 @@ pathHome = xbmcvfs.translatePath("special://home")
 global pathXbmc
 pathXbmc = xbmcvfs.translatePath("special://xbmc")
 
-logger.debug("Paths created")
-
 """Appends various paths used in the addon"""
 path.append(addonPath)
 path.append(pathAddonDataAddon)
@@ -54,5 +48,10 @@ path.append(join(addonPath, "resources", "lib", "models"))
 path.append(join(addonPath, "resources", "lib", "sites"))
 path.append(join(addonPath, "resources", "lib", "views"))
 path.append(join(addonPath, "resources", "lib", "controllers"))
+
+from resources.lib.controllers.logger import Logger
+
+"""Create logger"""
+logger = Logger(os.path.basename(__file__))
 
 logger.debug("Paths appended")
