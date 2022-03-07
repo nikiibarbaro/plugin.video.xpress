@@ -10,8 +10,8 @@ import os
 """Execute debugging"""
 # web_pdb.set_trace()  # NEED TO COMMENTED OUT BEFORE PUSHING TO GITHUB TO PREVENT UPDATER BREAKS
 
-"""Required imports, appends controllers to sys.path in order that Kodi can import addon_add_paths.py"""
-from resources.lib.controllers import addon_add_paths
+#"""Required imports, appends controllers to sys.path in order that Kodi can import addon_add_paths.py"""
+#from resources.lib.controllers import addon_add_paths
 
 """Required imports"""
 from resources.lib.controllers.update_manager import updateManager
