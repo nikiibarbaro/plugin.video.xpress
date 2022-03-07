@@ -14,12 +14,10 @@ import web_pdb;  # NEED TO COMMENTED OUT BEFORE PUSHING TO GITHUB TO PREVENT UPD
 """Execute debugging"""
 web_pdb.set_trace()  # NEED TO COMMENTED OUT BEFORE PUSHING TO GITHUB TO PREVENT UPDATER BREAKS
 
-"""Required imports, appends controllers to sys.path in order that Kodi can import add_paths.py"""
-addonPath = xbmcvfs.translatePath(xbmcaddon.Addon(ADDON_NAME).getAddonInfo('path'))
-path.append(join(addonPath, "resources", "lib", "controllers"))
+"""Required imports, appends controllers to sys.path in order that Kodi can import addon_add_paths.py"""
+from resources.lib.controllers import addon_add_paths
 
 """Required imports"""
-import resources.lib.controllers.add_paths
 from resources.lib.controllers.update_manager import updateManager
 from resources.lib.controllers.logger import Logger
 
