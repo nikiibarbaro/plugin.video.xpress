@@ -2,8 +2,8 @@
 
 import sys, xbmc, xbmcgui, xbmcaddon, xbmcvfs
 from sys import path
-import web_pdb;
-web_pdb.set_trace()
+#import web_pdb;
+#web_pdb.set_trace()
 #resolverAddonID = 'script.module.resolveurl'
 #resolverAddon= xbmcaddon.Addon(resolverAddonID)
 #addonResolverTranslatedPath = xbmcvfs.translatePath(resolverAddon.getAddonInfo('path'))
