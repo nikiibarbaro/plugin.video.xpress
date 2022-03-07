@@ -8,8 +8,8 @@ from sys import path
 
 ADDON_NAME = "plugin.video.xpress"
 
-import web_pdb;#NEED TO COMMENTED OUT BEFORE PUSHING TO GITHUB TO PREVENT UPDATER BREAKS
-web_pdb.set_trace()#NEED TO COMMENTED OUT BEFORE PUSHING TO GITHUB TO PREVENT UPDATER BREAKS
+import web_pdb;  # NEED TO COMMENTED OUT BEFORE PUSHING TO GITHUB TO PREVENT UPDATER BREAKS
+web_pdb.set_trace()  # NEED TO COMMENTED OUT BEFORE PUSHING TO GITHUB TO PREVENT UPDATER BREAKS
 
 # addonXpress = xbmcaddon.Addon(ADDON_NAME)
 # xpressAddonPath = xbmcvfs.translatePath(addonXpress.getAddonInfo('path'))
@@ -36,19 +36,13 @@ dialog = xbmcgui.Dialog()
 if (updateManager.getIsUpdated()):
     dialog.notification('xPress', 'Erfolgreich aktualisiert', xbmcgui.NOTIFICATION_INFO,
                         2000, True)
+    xbmc.sleep(2000)
 updateState = updateManager.isUpdate()
 if (updateState):
     dialog.notification('xPress', 'Ein neues Update ist verfügbar und wird installiert', xbmcgui.NOTIFICATION_INFO,
                         2000, True)
     Settings.setIsUpdated(True)
     updateManager.forceRepoUpdate()
-    xbmc.sleep(4000)
-    xbmc.sleep(4000)
-    xbmc.sleep(4000)
-    updateState = updateManager.isUpdate()
-    if (updateState):
-        dialog.notification('xPress', 'Update konnte nicht installiert werden, bitte starten Sie Kodi neu',
-                            xbmcgui.NOTIFICATION_WARNING, 5000, True)
 elif (updateState) == False:
     dialog.notification('xPress', 'Keine neuen Updates verfügbar', xbmcgui.NOTIFICATION_INFO, 2000, True)
 else:
