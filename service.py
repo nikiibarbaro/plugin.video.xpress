@@ -8,8 +8,8 @@ from sys import path
 
 ADDON_NAME = "plugin.video.xpress"
 
-# import web_pdb;#NEED TO COMMENTED OUT BEFORE PUSHING TO GITHUB TO PREVENT UPDATER BREAKS
-# web_pdb.set_trace()#NEED TO COMMENTED OUT BEFORE PUSHING TO GITHUB TO PREVENT UPDATER BREAKS
+import web_pdb;#NEED TO COMMENTED OUT BEFORE PUSHING TO GITHUB TO PREVENT UPDATER BREAKS
+web_pdb.set_trace()#NEED TO COMMENTED OUT BEFORE PUSHING TO GITHUB TO PREVENT UPDATER BREAKS
 
 # addonXpress = xbmcaddon.Addon(ADDON_NAME)
 # xpressAddonPath = xbmcvfs.translatePath(addonXpress.getAddonInfo('path'))
