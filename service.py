@@ -12,7 +12,7 @@ import os
 
 """Required imports, appends controllers to sys.path in order that Kodi can import addon_add_paths.py"""
 from resources.lib.controllers import addon_add_paths
-#from resources.lib.controllers import addon_add_global_variables
+from resources.lib.controllers import addon_add_global_variables
 
 """Required imports"""
 from resources.lib.controllers.update_manager import updateManager
