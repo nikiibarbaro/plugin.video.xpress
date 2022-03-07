@@ -32,7 +32,7 @@ updateState = updateManager.isUpdate()
 if (updateState):
     dialog.notification('xPress', 'Ein neues Update ist verfügbar und wird installiert', xbmcgui.NOTIFICATION_INFO,
                         2000, True)
-    updateManager.setIsUpdated(True)
+    updateManager.setIsUpdated("True")
     updateManager.forceRepoUpdate()
 elif (updateState) == False:
     dialog.notification('xPress', 'Keine neuen Updates verfügbar', xbmcgui.NOTIFICATION_INFO, 2000, True)
