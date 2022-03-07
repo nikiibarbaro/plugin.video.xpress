@@ -9,6 +9,7 @@ from sys import path
 ADDON_NAME = "plugin.video.xpress"
 
 import web_pdb;  # NEED TO COMMENTED OUT BEFORE PUSHING TO GITHUB TO PREVENT UPDATER BREAKS
+
 web_pdb.set_trace()  # NEED TO COMMENTED OUT BEFORE PUSHING TO GITHUB TO PREVENT UPDATER BREAKS
 
 # addonXpress = xbmcaddon.Addon(ADDON_NAME)
@@ -20,15 +21,10 @@ web_pdb.set_trace()  # NEED TO COMMENTED OUT BEFORE PUSHING TO GITHUB TO PREVENT
 addonPath = xbmcvfs.translatePath(xbmcaddon.Addon(ADDON_NAME).getAddonInfo('path'))
 path.append(join(addonPath, "resources", "lib", "controllers"))
 
-from resources.lib.controllers.update_manager import updateManager
 import resources.lib.controllers.add_paths
-from resources.lib.controllers.settings import Settings
-from resources.lib.controllers.logger import Logger
+from resources.lib.controllers.update_manager import updateManager
 
-"""
-    Stopping addon just for safty to not conflict with potential updates
-"""
-# xbmc.executebuiltin("StopScript(addon)")
+from resources.lib.controllers.logger import Logger
 
 """Create dialog object for displaying informations"""
 dialog = xbmcgui.Dialog()
@@ -41,7 +37,7 @@ updateState = updateManager.isUpdate()
 if (updateState):
     dialog.notification('xPress', 'Ein neues Update ist verfügbar und wird installiert', xbmcgui.NOTIFICATION_INFO,
                         2000, True)
-    Settings.setIsUpdated(True)
+    updateManager.setIsUpdated(True)
     updateManager.forceRepoUpdate()
 elif (updateState) == False:
     dialog.notification('xPress', 'Keine neuen Updates verfügbar', xbmcgui.NOTIFICATION_INFO, 2000, True)
