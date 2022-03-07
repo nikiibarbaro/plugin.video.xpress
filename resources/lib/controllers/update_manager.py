@@ -2,8 +2,8 @@ import xbmcaddon
 import xbmc
 import requests  # normal to be not recognized by IDEA due packages not exists in env
 import re
+import os
 import xml.etree.ElementTree as et
-
 
 # import web_pdb;#NEED TO COMMENTED OUT BEFORE PUSHING TO GITHUB TO PREVENT UPDATER BREAKS
 # web_pdb.set_trace()#NEED TO COMMENTED OUT BEFORE PUSHING TO GITHUB TO PREVENT UPDATER BREAKS
@@ -12,86 +12,98 @@ from resources.lib.controllers.addon_add_global_variables import ADDON_ID, USER,
 """Add filepath from imports to addon"""
 from resources.lib.modules.packaging import version
 from resources.lib.controllers.settings import Settings
+from resources.lib.controllers.logger import Logger
+
+"""Create logger"""
+logger = Logger(os.path.basename(__file__))
 
 
 class updateManager:
-    """Gets version from local addon"""
+    """Class for handling updates"""
 
     @staticmethod
     def getLocalVersion():
+        """Gets version from local addon"""
         try:
             addonVersionLocal = xbmcaddon.Addon(ADDON_ID).getAddonInfo("version")
+            logger.debug("Local version: " + addonVersionLocal)
         except RuntimeError:
+            logger.debug("Local version couldn't be fetched")
             xbmc.sleep(4000)
             addonVersionLocal = xbmcaddon.Addon(ADDON_ID).getAddonInfo("version")
         if (addonVersionLocal is None):
+            logger.debug("Local version is None")
             return None
         return addonVersionLocal
 
-    """Gets version from remote zip"""
-
     @staticmethod
     def getRemoteVersion():
+        """Gets version from remote zip"""
         url = "https://raw.githubusercontent.com/{0}/{1}/master/zips/addons.xml".format(USER, REPOSITORY_NAME)
         response = requests.get(url)
         if (response.status_code != 200):
+            logger.debug("Couldn't get response")
             return None
         tree = et.fromstring(response.content)
         for element in tree:
             if (element.attrib.get("id") == ADDON_ID):
                 remoteVersion = element.attrib.get("version")
+                logger.debug("Remote version: " + remoteVersion)
                 return remoteVersion
+        logger.debug("Couldn't fetch remote version")
         return None
-
-    """forces Kodi to check for new updates in the Repo and installing it"""
 
     @staticmethod
     def forceRepoUpdate():
+        """forces Kodi to check for new updates in the Repo and installing it"""
+        logger.debug("Force update")
         xbmc.executebuiltin("UpdateAddonRepos")
-
-    """Checks if update is available"""
 
     @staticmethod
     def isUpdate():
+        """Checks if update is available"""
         remoteVersion = updateManager.getRemoteVersion()
         localVersion = updateManager.getLocalVersion()
         if (remoteVersion is None or localVersion is None):
             return None
         if (version.parse(remoteVersion) > version.parse(localVersion)):
+            logger.debug("New update is available")
+            logger.debug("Old version: " + localVersion)
+            logger.debug("New version: " + remoteVersion)
             return True
         else:
+            logger.debug("Addon is up to date")
             return False
-
-    """Gets state whether on last run an update was applied to addon"""
 
     @staticmethod
     def getIsUpdated():
+        """Gets state whether on last run an update was applied to addon"""
+        logger.debug("Gets getIsUpdated state")
         return Settings.getIsUpdated()
-
-    """Sets state of json 'isUpdated' to True/False"""
 
     @staticmethod
     def setIsUpdated(state):
+        """Sets state of json 'isUpdated' to True/False"""
+        logger.debug("Sets setIsUpdated state: " + state)
         Settings.setIsUpdated(state)
-
-    """Enables addon"""
 
     @staticmethod
     def enableAddon():
+        """Enables addon"""
+        logger.debug("Addon enabled")
         xbmc.executeJSONRPC(
             '{"jsonrpc":"2.0","method":"Addons.SetAddonEnabled","id":1,"params":{"addonid":"%s", "enabled":true}}' % ADDON_ID)
 
-    """Disables addon"""
-
     @staticmethod
     def disableAddon():
+        """Disables addon"""
+        logger.debug("Addon disabled")
         xbmc.executeJSONRPC(
             '{"jsonrpc":"2.0","method":"Addons.SetAddonEnabled","id":1,"params":{"addonid":"%s", "enabled":false}}' % ADDON_ID)
 
-    """Crawls through jsons to get the latest zip filename"""
-
     @staticmethod
     def getLatestFilename():
+        """Crawls through jsons to get the latest zip filename"""
         addonFilenameZip = ''
         try:
             url = "https://api.github.com/repos/{}/{}/git/trees/master?recursive=1".format(USER, REPOSITORY_NAME)
@@ -113,10 +125,9 @@ class updateManager:
         else:
             return addonFilenameZip
 
-    """Gets url to .zip in zips/plugin.video.xpress"""
-
     @staticmethod
     def getLatestZipUrl():
+        """Gets url to .zip in zips/plugin.video.xpress"""
         addonFilenameZip = updateManager.getLatestFilename()
         if (addonFilenameZip is None):
             return None

@@ -1,18 +1,14 @@
 """Kodi builtin imports"""
 import xbmcgui
 import xbmc
-import xbmcaddon
-import xbmcvfs
 
-"""Needed for paths and stuff"""
-from os.path import join
-from sys import path
+import os
 
 """Debugging"""
-#import web_pdb;  # NEED TO COMMENTED OUT BEFORE PUSHING TO GITHUB TO PREVENT UPDATER BREAKS
+# import web_pdb;  # NEED TO COMMENTED OUT BEFORE PUSHING TO GITHUB TO PREVENT UPDATER BREAKS
 
 """Execute debugging"""
-#web_pdb.set_trace()  # NEED TO COMMENTED OUT BEFORE PUSHING TO GITHUB TO PREVENT UPDATER BREAKS
+# web_pdb.set_trace()  # NEED TO COMMENTED OUT BEFORE PUSHING TO GITHUB TO PREVENT UPDATER BREAKS
 
 """Required imports, appends controllers to sys.path in order that Kodi can import addon_add_paths.py"""
 from resources.lib.controllers import addon_add_paths
@@ -20,6 +16,9 @@ from resources.lib.controllers import addon_add_paths
 """Required imports"""
 from resources.lib.controllers.update_manager import updateManager
 from resources.lib.controllers.logger import Logger
+
+"""Create logger"""
+logger = Logger(os.path.basename(__file__))
 
 """Create dialog object for displaying informations"""
 dialog = xbmcgui.Dialog()

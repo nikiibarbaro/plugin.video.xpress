@@ -1,35 +1,33 @@
 import xbmc
 import sys
+import os
 
-ADDON_ID = "plugin.video.xpress"
+from resources.lib.controllers.addon_add_global_variables import ADDON_ID
 
 
 class Logger:
+    """Class for log events"""
 
-    def __init__(self):
-        pass
+    def __init__(self, file: str):
+        self.file = file
 
-    @staticmethod
-    def debug(message):
-        xbmc.log("[" + ADDON_ID + "]: " + message,
+    def debug(self, message: str):
+        """To see debug you need to enable Settings/System/Logging/Enable debug logging"""
+        xbmc.log(ADDON_ID + "::" + self.file + " - " + message,
                  xbmc.LOGDEBUG)
 
-    @staticmethod
-    def info(message):
-        xbmc.log("[" + ADDON_ID + "]: " + message,
+    def info(self, message: str):
+        xbmc.log(ADDON_ID + "::" + self.file + " - " + message,
                  xbmc.LOGINFO)
 
-    @staticmethod
-    def warning(message):
-        xbmc.log("[" + ADDON_ID + "]: " + message,
+    def warning(self, message: str):
+        xbmc.log(ADDON_ID + "::" + self.file + " - " + message,
                  xbmc.LOGWARNING)
 
-    @staticmethod
-    def error(message):
-        xbmc.log("[" + ADDON_ID + "]: " + message,
+    def error(self, message: str):
+        xbmc.log(ADDON_ID + "::" + self.file + " - " + message,
                  xbmc.LOGERROR)
 
-    @staticmethod
-    def fatal(message):
-        xbmc.log("[" + ADDON_ID + "]: " + message,
+    def fatal(self, message: str):
+        xbmc.log(ADDON_ID + "::" + self.file + " - " + message,
                  xbmc.LOGFATAL)
