@@ -14,4 +14,4 @@ import resolveurl as resolver
 #import urlresolver as resolver
 
 sLink = resolver.resolve('https://voe.sx/e/y0a379ohxuj5')
-xbmc.Player(sLink)
+xbmc.Player().play(sLink)
