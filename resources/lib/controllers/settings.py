@@ -1,9 +1,9 @@
 import json
-import add_paths
+from resources.lib.controllers.addon_add_paths import pathAddonSettings
 import os.path
 
 """Initialize json structure on first use"""
-if not (os.path.exists(add_paths.pathAddonSettings)):
+if not (os.path.exists(pathAddonSettings)):
     structure = {
         "settings": [
             {
@@ -13,7 +13,7 @@ if not (os.path.exists(add_paths.pathAddonSettings)):
     }
 
     initJson = json.dumps(structure)
-    with open(add_paths.pathAddonSettings, "w+") as settings:
+    with open(pathAddonSettings, "w+") as settings:
         settings.write(initJson)
 
 """Class for settings used in addon"""
@@ -32,17 +32,17 @@ class Settings:
             ]
         }
         settingsJson = json.dumps(settings)
-        with open(add_paths.pathAddonSettings, "w+") as settings:
+        with open(pathAddonSettings, "w+") as settings:
             settings.write(settingsJson)
 
     """Gets state of 'isUpdated'"""
 
     @staticmethod
     def getIsUpdated():
-        with open(add_paths.pathAddonSettings) as json_file:
+        with open(pathAddonSettings) as json_file:
             data = json.load(json_file)
         if (data["settings"][0]["isUpdated"] == "True"):
-            Settings.setIsUpdated("False")
+            Settings.setIsUpdated(False)
             return True
         else:
             return False
