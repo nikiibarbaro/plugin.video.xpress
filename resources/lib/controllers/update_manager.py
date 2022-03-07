@@ -1,43 +1,15 @@
 import xbmcaddon
-import xbmcvfs
 import xbmc
 import requests  # normal to be not recognized by IDEA due packages not exists in env
 import re
-import os
-import sqlite3
-import datetime
 import xml.etree.ElementTree as et
-from os.path import join
-from sys import path
+
 
 # import web_pdb;#NEED TO COMMENTED OUT BEFORE PUSHING TO GITHUB TO PREVENT UPDATER BREAKS
 # web_pdb.set_trace()#NEED TO COMMENTED OUT BEFORE PUSHING TO GITHUB TO PREVENT UPDATER BREAKS
-"""
-    USER = Username
-    REPOSITORY_NAME = Repository name
-    ADDON_NAME = Addon name
-    ADDON_PATH = Addon path
-"""
-USER = "nikiibarbaro"
-REPOSITORY_NAME = "repository.xpress"
-ADDON_NAME = "plugin.video.xpress"
-ADDON_PATH = "zips/plugin.video.xpress"
-
-"""special protocol variable for multi OS support"""
-pathHome = xbmcvfs.translatePath("special://home")
-pathXbmc = xbmcvfs.translatePath("special://xbmc")
-pathPackages = xbmcvfs.translatePath(join("special://home", "addons", "packages"))
-pathAddonDataAddon = xbmcvfs.translatePath(join("special://home", "userdata", "addon_data", "{0}".format(ADDON_NAME)))
-# pathAddon = xbmcaddon.Addon(ADDON_NAME).getAddonInfo("path")
+from resources.lib.controllers.addon_add_global_variables import ADDON_ID, USER, REPOSITORY_NAME, ADDON_PATH
 
 """Add filepath from imports to addon"""
-# addonPath = xbmcvfs.translatePath(xbmcaddon.Addon(ADDON_NAME).getAddonInfo('path'))
-# path.append(join(addonPath, "resources", "lib", "controllers"))
-# addonPath = xbmcvfs.translatePath(xbmcaddon.Addon(ADDON_NAME).getAddonInfo('path'))
-# xpressAddonPath = xbmcvfs.translatePath(addonXpress.getAddonInfo('path'))
-# path.append(addonPath)
-# path.append(join(addonPath, "resources", "lib", "modules"))
-# from resources.lib.controllers.addPaths import addPaths
 from resources.lib.modules.packaging import version
 from resources.lib.controllers.settings import Settings
 
@@ -48,10 +20,10 @@ class updateManager:
     @staticmethod
     def getLocalVersion():
         try:
-            addonVersionLocal = xbmcaddon.Addon(ADDON_NAME).getAddonInfo("version")
+            addonVersionLocal = xbmcaddon.Addon(ADDON_ID).getAddonInfo("version")
         except RuntimeError:
             xbmc.sleep(4000)
-            addonVersionLocal = xbmcaddon.Addon(ADDON_NAME).getAddonInfo("version")
+            addonVersionLocal = xbmcaddon.Addon(ADDON_ID).getAddonInfo("version")
         if (addonVersionLocal is None):
             return None
         return addonVersionLocal
@@ -66,7 +38,7 @@ class updateManager:
             return None
         tree = et.fromstring(response.content)
         for element in tree:
-            if (element.attrib.get("id") == ADDON_NAME):
+            if (element.attrib.get("id") == ADDON_ID):
                 remoteVersion = element.attrib.get("version")
                 return remoteVersion
         return None
@@ -107,19 +79,20 @@ class updateManager:
     @staticmethod
     def enableAddon():
         xbmc.executeJSONRPC(
-            '{"jsonrpc":"2.0","method":"Addons.SetAddonEnabled","id":1,"params":{"addonid":"%s", "enabled":true}}' % ADDON_NAME)
+            '{"jsonrpc":"2.0","method":"Addons.SetAddonEnabled","id":1,"params":{"addonid":"%s", "enabled":true}}' % ADDON_ID)
 
     """Disables addon"""
 
     @staticmethod
     def disableAddon():
         xbmc.executeJSONRPC(
-            '{"jsonrpc":"2.0","method":"Addons.SetAddonEnabled","id":1,"params":{"addonid":"%s", "enabled":false}}' % ADDON_NAME)
+            '{"jsonrpc":"2.0","method":"Addons.SetAddonEnabled","id":1,"params":{"addonid":"%s", "enabled":false}}' % ADDON_ID)
 
     """Crawls through jsons to get the latest zip filename"""
 
     @staticmethod
     def getLatestFilename():
+        addonFilenameZip = ''
         try:
             url = "https://api.github.com/repos/{}/{}/git/trees/master?recursive=1".format(USER, REPOSITORY_NAME)
             response = requests.get(url)
@@ -147,6 +120,6 @@ class updateManager:
         addonFilenameZip = updateManager.getLatestFilename()
         if (addonFilenameZip is None):
             return None
-        url = "https://github.com/{0}/{1}/blob/master/zips/{2}/{3}?raw=true".format(USER, REPOSITORY_NAME, ADDON_NAME,
+        url = "https://github.com/{0}/{1}/blob/master/zips/{2}/{3}?raw=true".format(USER, REPOSITORY_NAME, ADDON_ID,
                                                                                     addonFilenameZip)
         return url
