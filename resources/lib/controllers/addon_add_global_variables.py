@@ -12,8 +12,5 @@ USER = "nikiibarbaro"
 global REPOSITORY_NAME
 REPOSITORY_NAME = "repository.xpress"
 
-global ADDON_ID
-ADDON_ID = "plugin.video.xpress"
-
 global ADDON_PATH
 ADDON_PATH = "zips/plugin.video.xpress"
