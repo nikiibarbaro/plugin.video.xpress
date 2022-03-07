@@ -1,29 +1,26 @@
+"""Kodi builtin imports"""
 import xbmcgui
 import xbmc
 import xbmcaddon
 import xbmcvfs
 
+"""Needed for paths and stuff"""
 from os.path import join
 from sys import path
 
-ADDON_NAME = "plugin.video.xpress"
-
+"""Debugging"""
 import web_pdb;  # NEED TO COMMENTED OUT BEFORE PUSHING TO GITHUB TO PREVENT UPDATER BREAKS
 
+"""Execute debugging"""
 web_pdb.set_trace()  # NEED TO COMMENTED OUT BEFORE PUSHING TO GITHUB TO PREVENT UPDATER BREAKS
 
-# addonXpress = xbmcaddon.Addon(ADDON_NAME)
-# xpressAddonPath = xbmcvfs.translatePath(addonXpress.getAddonInfo('path'))
-# path.append(xpressAddonPath)
-# path.append(join(xpressAddonPath, "resources", "lib", "controllers"))
-
-
+"""Required imports, appends controllers to sys.path in order that Kodi can import add_paths.py"""
 addonPath = xbmcvfs.translatePath(xbmcaddon.Addon(ADDON_NAME).getAddonInfo('path'))
 path.append(join(addonPath, "resources", "lib", "controllers"))
 
+"""Required imports"""
 import resources.lib.controllers.add_paths
 from resources.lib.controllers.update_manager import updateManager
-
 from resources.lib.controllers.logger import Logger
 
 """Create dialog object for displaying informations"""
