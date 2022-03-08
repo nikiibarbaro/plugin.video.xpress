@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.xpress" name="xPress" version="0.1.3" provider-name="xPress-Team">
+<addon id="plugin.video.xpress" name="xPress" version="0.1.4" provider-name="xPress-Team">
     <requires>
         <import addon="script.module.requests"/>
         <import addon="script.module.beautifulsoup4"/>
@@ -29,7 +29,9 @@
         <assets>
             <icon>icon.png</icon>
             <fanart>fanart.jpg</fanart>
-            <screenshot>resources/art/screenshot.jpg</screenshot>
+            <screenshot>resources/art/screenshot1.jpg</screenshot>
+            <screenshot>resources/art/screenshot2.jpg</screenshot>
+            <screenshot>resources/art/screenshot3.jpg</screenshot>
         </assets>
     </extension>
 </addon>
