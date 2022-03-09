@@ -29,11 +29,18 @@ pathAddonSettings = xbmcvfs.translatePath(join(pathAddonDataAddon, "settings.jso
 global pathPackages
 pathPackages = xbmcvfs.translatePath(join("special://home", "addons", "packages"))
 
+global pathThumbnails
+pathThumbnails = xbmcvfs.translatePath("special://thumbnails")
+
 global pathHome
 pathHome = xbmcvfs.translatePath("special://home")
 
 global pathXbmc
 pathXbmc = xbmcvfs.translatePath("special://xbmc")
+
+global pathAddonDatabase
+pathAddonDatabase = xbmcvfs.translatePath(
+    join("special://home", "userdata", "Database"))
 
 """Appends various paths used in the addon"""
 path.append(addonPath)
