@@ -17,13 +17,14 @@ import os
 """Required imports"""
 from resources.lib.controllers.update_manager import updateManager
 from resources.lib.models.logger import Logger
+from resources.lib.models.clear_thumbnail_cache import clearThumbnailCache
 
 """Create logger"""
 logger = Logger(os.path.basename(__file__))
 
 """Create dialog object for displaying informations"""
 dialog = xbmcgui.Dialog()
-
+clearThumbnailCache.start()
 if (updateManager.getIsUpdated()):
     dialog.notification('xPress', 'Erfolgreich aktualisiert', xbmcgui.NOTIFICATION_INFO,
                         2000, True)
