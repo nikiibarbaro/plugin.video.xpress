@@ -16,7 +16,7 @@ import os
 
 """Required imports"""
 from resources.lib.controllers.update_manager import updateManager
-from resources.lib.controllers.logger import Logger
+from resources.lib.models.logger import Logger
 
 """Create logger"""
 logger = Logger(os.path.basename(__file__))
